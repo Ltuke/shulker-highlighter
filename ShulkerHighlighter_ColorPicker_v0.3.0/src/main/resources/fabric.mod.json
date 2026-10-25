@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "shulkerhighlighter",
+  "version": "${version}",
+  "name": "Shulker Highlighter",
+  "description": "Client-side depth-tested colored outlines and RGB recoloring for chosen shulker box colors. Configure in Mod Menu.",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.example.shulkerhighlight.ShulkerHighlighter"
+    ],
+    "modmenu": [
+      "com.example.shulkerhighlight.ModMenuEntry"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "26.3",
+    "java": ">=25",
+    "fabric-api": "*",
+    "modmenu": ">=21.0.0"
+  },
+  "mixins": [
+    "shulker-highlighter.mixins.json"
+  ]
+}
