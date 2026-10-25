@@ -62,7 +62,7 @@ public abstract class ShulkerBoxRendererMixin {
             // Shape is close to the visible shulker model, with a slight inset.
             collector.submitShapeOutline(
                 poseStack,
-                Shapes.box(0.06, 0.06, 0.06, 0.94, 0.94, 0.94),
+                Shapes.box(-0.025, -0.025, -0.025, 1.025, 1.025, 1.025),
                 RenderTypes.lines(),
                 0xFF000000 | ShulkerHighlighter.rgb,
                 3.0F,

@@ -5,6 +5,10 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
+import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -17,7 +21,7 @@ public final class ShulkerHighlighter implements ClientModInitializer {
         "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black", "undyed"
     };
     public static volatile boolean enabled = true;
-    public static volatile String target = "green";
+    public static final Set<String> targets = Collections.synchronizedSet(new LinkedHashSet<>(Arrays.asList("green")));
     public static volatile String mode = "outline";
     public static volatile int rgb = 0xFF0000;
     private static final Path CONFIG = FabricLoader.getInstance().getConfigDir().resolve("shulker-highlighter.properties");
@@ -28,7 +32,7 @@ public final class ShulkerHighlighter implements ClientModInitializer {
     }
 
     public static boolean matches(DyeColor dye) {
-        return enabled && (dye == null ? "undyed" : dye.name().toLowerCase(Locale.ROOT)).equals(target);
+        return enabled && targets.contains(dye == null ? "undyed" : dye.name().toLowerCase(Locale.ROOT));
     }
 
     public static void load() {
@@ -37,10 +41,13 @@ public final class ShulkerHighlighter implements ClientModInitializer {
             Properties p = new Properties();
             p.load(stream);
             enabled = Boolean.parseBoolean(p.getProperty("enabled", "true"));
-            String c = p.getProperty("target", "green");
-            for (String allowed : COLORS) {
-                if (allowed.equals(c)) { target = c; break; }
+            String raw = p.getProperty("targets", p.getProperty("target", "green"));
+            Set<String> valid = new LinkedHashSet<>();
+            for (String choice : raw.split(",")) {
+                for (String allowed : COLORS) if (allowed.equals(choice.trim())) valid.add(allowed);
             }
+            targets.clear();
+            targets.addAll(valid);
             String m = p.getProperty("mode", "outline");
             if ("outline".equals(m) || "recolor".equals(m)) mode = m;
             rgb = Integer.parseInt(p.getProperty("rgb", "FF0000"), 16) & 0xFFFFFF;
@@ -53,7 +60,7 @@ public final class ShulkerHighlighter implements ClientModInitializer {
         try {
             Properties p = new Properties();
             p.setProperty("enabled", Boolean.toString(enabled));
-            p.setProperty("target", target);
+            p.setProperty("targets", String.join(",", targets));
             p.setProperty("mode", mode);
             p.setProperty("rgb", String.format(Locale.ROOT, "%06X", rgb));
             Files.createDirectories(CONFIG.getParent());
