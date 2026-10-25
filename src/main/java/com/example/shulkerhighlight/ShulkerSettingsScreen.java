@@ -70,7 +70,7 @@ public final class ShulkerSettingsScreen extends Screen {
 
         saveButton = addRenderableWidget(Button.builder(Component.literal("Save & Done"), button -> saveAndExit())
             .bounds(x, y + 132, 112, 20).build());
-        addRenderableWidget(Button.builder(Component.literal("Cancel"), button -> minecraft.setScreen(parent))
+        addRenderableWidget(Button.builder(Component.literal("Cancel"), button -> minecraft.gui.setScreen(parent))
             .bounds(x + 118, y + 132, 112, 20).build());
     }
 
@@ -102,11 +102,11 @@ public final class ShulkerSettingsScreen extends Screen {
         ShulkerHighlighter.mode = selectedMode;
         ShulkerHighlighter.rgb = selectedRgb;
         ShulkerHighlighter.save();
-        minecraft.setScreen(parent);
+        minecraft.gui.setScreen(parent);
     }
 
     @Override
     public void onClose() {
-        minecraft.setScreen(parent); // Escape cancels unapplied changes
+       minecraft.gui.setScreen(parent); // Escape cancels unapplied changes
     }
 }
