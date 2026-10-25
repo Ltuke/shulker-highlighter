@@ -1,0 +1,13 @@
+plugins { id 'net.fabricmc.fabric-loom' version '1.18.2' }
+version = '0.1.0'
+group = 'com.example'
+base { archivesName = 'shulker-highlighter' }
+repositories { maven { url = 'https://maven.fabricmc.net/' }; maven { url = 'https://maven.terraformersmc.com/releases/' }; mavenCentral() }
+dependencies {
+ minecraft 'com.mojang:minecraft:26.3'
+ modImplementation 'net.fabricmc:fabric-loader:0.19.5'
+ modImplementation 'net.fabricmc.fabric-api:fabric-api:0.163.0+26.3'
+ modCompileOnly 'com.terraformersmc:modmenu:21.0.0'
+}
+processResources { inputs.property 'version', project.version; filesMatching('fabric.mod.json') { expand 'version': project.version } }
+java { toolchain { languageVersion = JavaLanguageVersion.of(25) }; withSourcesJar() }
