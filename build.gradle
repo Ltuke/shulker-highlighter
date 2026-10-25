@@ -3,7 +3,7 @@ plugins {
     id 'net.fabricmc.fabric-loom' version '1.18.2'
 }
 
-version = '0.2.0'
+version = '0.2.1'
 group = 'com.example'
 
 base {
@@ -13,7 +13,7 @@ base {
 repositories {
     maven { url = 'https://maven.fabricmc.net/' }
     // Official Modrinth Maven coordinates for Mod Menu 21.0.0 (26.3).
-    maven { url = 'https://api.modrinth.com/maven' }
+    maven { url = 'https://maven.terraformersmc.com/releases/' }
     mavenCentral()
 }
 
@@ -23,7 +23,7 @@ dependencies {
     // Modern Fabric Loom uses Gradle implementation/compileOnly here.
     implementation 'net.fabricmc:fabric-loader:0.19.5'
     implementation 'net.fabricmc.fabric-api:fabric-api:0.163.0+26.3'
-    compileOnly 'maven.modrinth:mOgUt4GM:kyy7dbrZ'
+    implementation 'com.terraformersmc:modmenu:21.0.0'
 }
 
 processResources {
