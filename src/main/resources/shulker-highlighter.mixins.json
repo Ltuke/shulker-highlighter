@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.example.shulkerhighlight.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "ShulkerBoxRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
